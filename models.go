@@ -70,7 +70,6 @@ const (
 	MethodMPESA = "M-PESA"
 	MethodCard  = "CARD-PAYMENT"
 )
-
 // Wallet represents a wallet resource
 type WalletResp struct {
 	WalletID         string    `json:"wallet_id"`

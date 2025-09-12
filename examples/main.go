@@ -21,14 +21,13 @@ func main() {
 	token := os.Getenv("TOKEN")
 	client := intasend.NewClient(publishable, token, false, true)
 	// Quick checkout for simple payments
-
 	paymentRequest := intasend.PaymentRequest{
-		PhoneNumber: "254703545191",
-		FirstName:   "Gash",
-		LastName:    "Genial",
-		Email:       "ngashgenial@gmail.com",
+		PhoneNumber: "254700000000",
+		FirstName:   "Felix",
+		LastName:    "United",
+		Email:       "k4NpI@example.com",
 		Currency:    intasend.CurrencyKES,
-		RedirectURL: "https://techliana.com",
+		RedirectURL: "https://intasend.com",
 		Method:      intasend.MethodCard,
 		CardTarrif:  intasend.CUSTOMER_PAYS,
 		APIRef:      "random_ref1",
