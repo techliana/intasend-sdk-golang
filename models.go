@@ -34,15 +34,68 @@ const (
 
 // PaymentResponse represents the API response for checkout creation
 type PaymentResponse struct {
-	URL         string                 `json:"url"`
-	ID          string                 `json:"id"`
-	Invoice     map[string]interface{} `json:"invoice"`
-	CustomerID  string                 `json:"customer_id"`
-	PaymentLink string                 `json:"payment_link"`
-	QRCode      string                 `json:"qr_code"`
-	Status      string                 `json:"status"`
-	Message     string                 `json:"message"`
-	Errors      map[string]interface{} `json:"errors,omitempty"`
+	ID               string      `json:"id"`
+	URL              string      `json:"url"`
+	Signature        string      `json:"signature"`
+	TrackingID       string      `json:"tracking_id"`
+	Methods          []string    `json:"methods"`
+	Layout           string      `json:"layout"`
+	Styles           Styles      `json:"styles"`
+	MerchantName     string      `json:"merchant_name"`
+	MerchantID       string      `json:"merchant_id"`
+	MerchantFullName string      `json:"merchant_full_name"`
+	MerchantLogo     interface{} `json:"merchant_logo"`
+	MerchantEmail    string      `json:"merchant_email"`
+	MerchantOrigin   string      `json:"merchant_origin"`
+	FirstName        string      `json:"first_name"`
+	LastName         string      `json:"last_name"`
+	PhoneNumber      interface{} `json:"phone_number"`
+	Email            string      `json:"email"`
+	Country          interface{} `json:"country"`
+	Address          interface{} `json:"address"`
+	City             interface{} `json:"city"`
+	State            interface{} `json:"state"`
+	Zipcode          interface{} `json:"zipcode"`
+	APIRef           string      `json:"api_ref"`
+	WalletID         interface{} `json:"wallet_id"`
+	Method           string      `json:"method"`
+	Channel          string      `json:"channel"`
+	Host             string      `json:"host"`
+	IsMobile         bool        `json:"is_mobile"`
+	Version          interface{} `json:"version"`
+	RedirectURL      string      `json:"redirect_url"`
+	Amount           int64       `json:"amount"`
+	Currency         string      `json:"currency"`
+	Paid             bool        `json:"paid"`
+	MobileTarrif     string      `json:"mobile_tarrif"`
+	CardTarrif       string      `json:"card_tarrif"`
+	BitcoinTarrif    string      `json:"bitcoin_tarrif"`
+	AchTarrif        string      `json:"ach_tarrif"`
+	BankTarrif       string      `json:"bank_tarrif"`
+	CreatedAt        time.Time   `json:"created_at"`
+	UpdatedAt        time.Time   `json:"updated_at"`
+}
+
+type Styles struct {
+	ComponentBackgroundColor      string `json:"componentBackgroundColor"`
+	UnselectedCardBackgroundColor string `json:"unselectedCardBackgroundColor"`
+	SelectedCardBackgroundColor   string `json:"selectedCardBackgroundColor"`
+	SelectedBorderColor           string `json:"selectedBorderColor"`
+	UnselectedBorderColor         string `json:"unselectedBorderColor"`
+	SelectedFontColor             string `json:"selectedFontColor"`
+	UnselectedFontColor           string `json:"unselectedFontColor"`
+	SelectedCardShadow            string `json:"selectedCardShadow"`
+	UnselectedCardShadow          string `json:"unselectedCardShadow"`
+	BorderRadius                  string `json:"borderRadius"`
+	InputLabelColor               string `json:"inputLabelColor"`
+	InputTextColor                string `json:"inputTextColor"`
+	InputBackgroundColor          string `json:"inputBackgroundColor"`
+	InputBorderColor              string `json:"inputBorderColor"`
+	InputBorderRadius             string `json:"inputBorderRadius"`
+	CtaBgColor                    string `json:"ctaBgColor"`
+	CtaFontColor                  string `json:"ctaFontColor"`
+	FontFamily                    string `json:"fontFamily"`
+	FontWeight                    string `json:"fontWeight"`
 }
 
 // ErrorResponse represents API error response
