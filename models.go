@@ -7,23 +7,23 @@ import (
 
 // PaymentRequest represents the payment checkout request payload
 type PaymentRequest struct {
-	PhoneNumber  string      `json:"phone_number,omitempty"`
-	Email        string      `json:"email,omitempty"`
-	Amount       float64     `json:"amount,omitempty"`
-	Currency     string      `json:"currency,omitempty"`
-	Comment      string      `json:"comment,omitempty"`
-	RedirectURL  string      `json:"redirect_url,omitempty"`
-	APIRef       string      `json:"api_ref,omitempty"`
-	FirstName    string      `json:"first_name,omitempty"`
-	LastName     string      `json:"last_name,omitempty"`
-	Country      string      `json:"country,omitempty"`
-	Address      string      `json:"address,omitempty"`
-	City         string      `json:"city,omitempty"`
-	State        string      `json:"state,omitempty"`
-	ZipCode      string      `json:"zipcode,omitempty"`
-	Method       string      `json:"method,omitempty"`
-	CardTarrif   TarriffType `json:"card_tarrif,omitempty"`
-	MobileTarrif TarriffType `json:"mobile_tarrif,omitempty"`
+	PhoneNumber  string            `json:"phone_number,omitempty"`
+	Email        string            `json:"email,omitempty"`
+	Amount       float64           `json:"amount,omitempty"`
+	Currency     CurrencyType      `json:"currency,omitempty"`
+	Comment      string            `json:"comment,omitempty"`
+	RedirectURL  string            `json:"redirect_url,omitempty"`
+	APIRef       string            `json:"api_ref,omitempty"`
+	FirstName    string            `json:"first_name,omitempty"`
+	LastName     string            `json:"last_name,omitempty"`
+	Country      string            `json:"country,omitempty"`
+	Address      string            `json:"address,omitempty"`
+	City         string            `json:"city,omitempty"`
+	State        string            `json:"state,omitempty"`
+	ZipCode      string            `json:"zipcode,omitempty"`
+	Method       PaymentMethodType `json:"method,omitempty"`
+	CardTarrif   TarriffType       `json:"card_tarrif,omitempty"`
+	MobileTarrif TarriffType       `json:"mobile_tarrif,omitempty"`
 }
 type TarriffType string
 
@@ -51,25 +51,30 @@ type ErrorResponse struct {
 	Errors  map[string]interface{} `json:"errors"`
 }
 
+type CurrencyType string
+
 // Currency constants
 const (
-	CurrencyKES = "KES"
-	CurrencyUSD = "USD"
-	CurrencyGBP = "GBP"
-	CurrencyEUR = "EUR"
-	CurrencyGHS = "GHS"
-	CurrencyNGN = "NGN"
-	CurrencyUGX = "UGX"
-	CurrencyTZS = "TZS"
-	CurrencyXAF = "XAF"
-	CurrencyXOF = "XOF"
+	CurrencyKES CurrencyType = "KES"
+	CurrencyUSD CurrencyType = "USD"
+	CurrencyGBP CurrencyType = "GBP"
+	CurrencyEUR CurrencyType = "EUR"
+	CurrencyGHS CurrencyType = "GHS"
+	CurrencyNGN CurrencyType = "NGN"
+	CurrencyUGX CurrencyType = "UGX"
+	CurrencyTZS CurrencyType = "TZS"
+	CurrencyXAF CurrencyType = "XAF"
+	CurrencyXOF CurrencyType = "XOF"
 )
+
+type PaymentMethodType string
 
 // Payment method constants
 const (
-	MethodMPESA = "M-PESA"
-	MethodCard  = "CARD-PAYMENT"
+	MethodMPESA PaymentMethodType = "M-PESA"
+	MethodCard  PaymentMethodType = "CARD-PAYMENT"
 )
+
 // Wallet represents a wallet resource
 type WalletResp struct {
 	WalletID         string    `json:"wallet_id"`

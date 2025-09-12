@@ -71,7 +71,7 @@ func (c *Client) CreateCheckoutLink(req *PaymentRequest) (*PaymentResponse, erro
 }
 
 // QuickCheckout creates a simple checkout link with minimal required fields
-func (c *Client) QuickCheckout(phoneNumber, email string, amount float64, currency, comment, redirectURL string) (*PaymentResponse, error) {
+func (c *Client) QuickCheckout(phoneNumber, email string, amount float64, currency CurrencyType, comment, redirectURL string) (*PaymentResponse, error) {
 	req := &PaymentRequest{
 		PhoneNumber: phoneNumber,
 		Email:       email,
@@ -119,7 +119,7 @@ func (b *PaymentRequestBuilder) WithAmount(amount float64) *PaymentRequestBuilde
 }
 
 // WithCurrency sets the currency
-func (b *PaymentRequestBuilder) WithCurrency(currency string) *PaymentRequestBuilder {
+func (b *PaymentRequestBuilder) WithCurrency(currency CurrencyType) *PaymentRequestBuilder {
 	b.request.Currency = currency
 	return b
 }
@@ -161,7 +161,7 @@ func (b *PaymentRequestBuilder) WithBillingAddress(country, address, city, state
 
 // WithMethod restricts payment to a specific method
 func (b *PaymentRequestBuilder) WithMethod(method string) *PaymentRequestBuilder {
-	b.request.Method = method
+	b.request.Method = PaymentMethodType(method)
 	return b
 }
 

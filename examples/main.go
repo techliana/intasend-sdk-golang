@@ -22,7 +22,7 @@ func main() {
 	client := intasend.NewClient(publishable, token, false, true)
 	// Quick checkout for simple payments
 	paymentRequest := intasend.PaymentRequest{
-		PhoneNumber: "254700000000",
+		PhoneNumber: "",
 		FirstName:   "Felix",
 		LastName:    "United",
 		Email:       "k4NpI@example.com",
