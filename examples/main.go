@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/techliana/intasend"
+	"github.com/techliana/intasend-sdk-golang"
 )
 
 // challenge:="intasendwebhook"

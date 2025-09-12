@@ -1,4 +1,4 @@
-module github.com/techliana/intasend
+module github.com/techliana/intasend-sdk-golang
 
 go 1.24.6
 
