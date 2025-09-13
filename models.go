@@ -64,7 +64,7 @@ type PaymentResponse struct {
 	IsMobile         bool        `json:"is_mobile"`
 	Version          interface{} `json:"version"`
 	RedirectURL      string      `json:"redirect_url"`
-	Amount           int64       `json:"amount"`
+	Amount           float64     `json:"amount"`
 	Currency         string      `json:"currency"`
 	Paid             bool        `json:"paid"`
 	MobileTarrif     string      `json:"mobile_tarrif"`
