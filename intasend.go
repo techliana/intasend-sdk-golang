@@ -12,6 +12,7 @@ type Client struct {
 	PublishableKey string
 	Token          string
 	BaseURL        string
+	APIBaseURL     string
 
 	HTTPClient *http.Client
 	Test       bool
@@ -23,19 +24,19 @@ type Client struct {
 // NewClient creates a new IntaSend API client
 func NewClient(publishableKey, token string, test bool, showlogs bool) *Client {
 	baseURL := "https://payment.intasend.com"
-	// apiBaseURL := "https://api.intasend.com"
+	apiBaseURL := "https://api.intasend.com"
 	if test {
 		baseURL = "https://sandbox.intasend.com"
-		// apiBaseURL = "https://sandbox.intasend.com"
+		apiBaseURL = "https://sandbox.intasend.com"
 	}
 
 	return &Client{
 		PublishableKey: publishableKey,
 		Token:          token,
 		BaseURL:        baseURL,
+		APIBaseURL:     apiBaseURL,
 		ShowLogs:       showlogs,
-		// APIBaseURL:     apiBaseURL,
-		Test: test,
+		Test:           test,
 		HTTPClient: &http.Client{
 			Timeout: 30 * time.Second,
 		},
@@ -192,6 +193,38 @@ func ValidateEmail(email string) bool {
 		len(email) < 255 &&
 		bytes.ContainsRune([]byte(email), '@') &&
 		bytes.ContainsRune([]byte(email), '.')
+}
+
+// SendIntaSendXBPush initiates an IntaSend-XB STK push collection request
+func (c *Client) SendIntaSendXBPush(req *IntaSendXBPushRequest) (*IntaSendXBPushResponse, error) {
+	if c.Token == "" {
+		return nil, fmt.Errorf("token is required to initiate IntaSend-XB push")
+	}
+	if req == nil {
+		return nil, fmt.Errorf("request payload is required")
+	}
+	if req.Amount == "" {
+		return nil, fmt.Errorf("amount is required")
+	}
+	if req.PhoneNumber == "" {
+		return nil, fmt.Errorf("phone number is required")
+	}
+	if req.Currency == "" {
+		return nil, fmt.Errorf("currency is required")
+	}
+	if req.Currency != CurrencyUGX && req.Currency != CurrencyTZS {
+		return nil, fmt.Errorf("currency must be UGX or TZS for IntaSend-XB push")
+	}
+	if req.MobileTarrif == "" {
+		req.MobileTarrif = CUSTOMER_PAYS
+	}
+
+	endpoint := fmt.Sprintf("%s/api/v1/payment/intasend-xb-push/", c.APIBaseURL)
+	var resp IntaSendXBPushResponse
+	if err := c.PostJSON(endpoint, req, true, false, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // GetPaymentStatus retrieves the payment status using invoice ID

@@ -212,6 +212,42 @@ type CollectionCallback struct {
 	Challenge      string    `json:"challenge"`
 }
 
+// IntaSendXBPushRequest represents the payload for initiating an IntaSend-XB STK push
+type IntaSendXBPushRequest struct {
+	Amount       string       `json:"amount"`
+	PhoneNumber  string       `json:"phone_number"`
+	Currency     CurrencyType `json:"currency"`
+	APIRef       string       `json:"api_ref,omitempty"`
+	WalletID     string       `json:"wallet_id,omitempty"`
+	MobileTarrif TarriffType  `json:"mobile_tarrif,omitempty"`
+}
+
+// IntaSendXBPushResponse represents the response from the IntaSend-XB STK push endpoint
+type IntaSendXBPushResponse struct {
+	ID              string             `json:"id"`
+	Invoice         InvoiceTx          `json:"invoice"`
+	Customer        IntaSendXBCustomer `json:"customer"`
+	PaymentLink     *string            `json:"payment_link"`
+	CustomerComment *string            `json:"customer_comment"`
+	Refundable      bool               `json:"refundable"`
+	CreatedAt       time.Time          `json:"created_at"`
+	UpdatedAt       time.Time          `json:"updated_at"`
+}
+
+// IntaSendXBCustomer holds customer info returned in the IntaSend-XB push response
+type IntaSendXBCustomer struct {
+	CustomerID  string    `json:"customer_id"`
+	PhoneNumber string    `json:"phone_number"`
+	Email       *string   `json:"email"`
+	FirstName   *string   `json:"first_name"`
+	LastName    *string   `json:"last_name"`
+	Country     *string   `json:"country"`
+	ZipCode     *string   `json:"zipcode"`
+	Provider    string    `json:"provider"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
 type TransactionResp struct {
 	Count    int64       `json:"count"`
 	Next     interface{} `json:"next"`

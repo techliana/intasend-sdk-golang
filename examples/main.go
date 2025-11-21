@@ -20,6 +20,20 @@ func main() {
 	publishable := os.Getenv("PUBLISHABLE_KEY")
 	token := os.Getenv("TOKEN")
 	client := intasend.NewClient(publishable, token, false, true)
+
+	resp, err := client.SendIntaSendXBPush(&intasend.IntaSendXBPushRequest{
+		Amount:       "500",
+		Currency:     intasend.CurrencyTZS,
+		PhoneNumber:  "255755974217",
+		APIRef:       "random_ref19",
+		WalletID:     "YPOZ6GK",
+		MobileTarrif: intasend.CUSTOMER_PAYS,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(resp)
+	return
 	// Quick checkout for simple payments
 	paymentRequest := intasend.PaymentRequest{
 		PhoneNumber: "",
