@@ -55,7 +55,8 @@ type Customer struct {
 // Payment status constants
 const (
 	StatusPending    = "PENDING"    // Payment is pending/waiting for completion
-	StatusCompleted  = "COMPLETED"  // Payment completed successfully
+	StatusCompleted  = "COMPLETED"  // Payment completed successfully (some endpoints)
+	StatusComplete   = "COMPLETE"   // Payment completed successfully (invoices endpoint)
 	StatusFailed     = "FAILED"     // Payment failed
 	StatusProcessing = "PROCESSING" // Payment is being processed
 	StatusCancelled  = "CANCELLED"  // Payment was cancelled
