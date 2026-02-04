@@ -14,10 +14,10 @@ type Invoice struct {
 	InvoiceID    string  `json:"invoice_id"`    // Same as ID, used for tracking
 	State        string  `json:"state"`         // Payment state (PENDING, COMPLETED, FAILED, etc.)
 	Provider     string  `json:"provider"`      // Payment provider (M-PESA, CARD, etc.)
-	Charges      string  `json:"charges"`       // Processing charges as string (e.g., "0.00")
+	Charges      float64 `json:"charges"`       // Processing charges as number (e.g., 0.00)
 	NetAmount    float64 `json:"net_amount"`    // Net payment amount after charges
 	Currency     string  `json:"currency"`      // Payment currency (KES, USD, etc.)
-	Value        string  `json:"value"`         // Payment value as string
+	Value        float64 `json:"value"`         // Payment value as number (e.g., 10.36)
 	Account      string  `json:"account"`       // Customer account (email or phone)
 	APIRef       string  `json:"api_ref"`       // Your API reference for tracking
 	Host         string  `json:"host"`          // IntaSend host URL
@@ -72,8 +72,9 @@ const (
 // Helper methods for PaymentStatus
 
 // IsCompleted checks if the payment status indicates successful completion
+// Handles both "COMPLETED" and "COMPLETE" states from different API endpoints
 func (ps *PaymentStatus) IsCompleted() bool {
-	return ps.Invoice.State == StatusCompleted
+	return ps.Invoice.State == StatusCompleted || ps.Invoice.State == StatusComplete
 }
 
 // IsPending checks if the payment status indicates it's still pending
@@ -154,8 +155,13 @@ func (ps *PaymentStatus) GetAPIReference() string {
 }
 
 // GetCharges returns the processing charges
-func (ps *PaymentStatus) GetCharges() string {
+func (ps *PaymentStatus) GetCharges() float64 {
 	return ps.Invoice.Charges
+}
+
+// GetValue returns the payment value
+func (ps *PaymentStatus) GetValue() float64 {
+	return ps.Invoice.Value
 }
 
 // IsInFinalState checks if the payment is in a final state (completed, failed, or cancelled)
@@ -221,10 +227,10 @@ func (ps *PaymentStatus) ToMap() map[string]interface{} {
         "invoice_id": "XMSLWOS",
         "state": "PENDING",
         "provider": "M-PESA",
-        "charges": "0.00",
+        "charges": 0.00,
         "net_amount": 10.36,
         "currency": "KES",
-        "value": "10.36",
+        "value": 10.36,
         "account": "test@example.com",
         "api_ref": "ISL_faa26ef9-eb08-4353-b125-ec6a8f022815",
         "host": "https://sandbox.intasend.com",
