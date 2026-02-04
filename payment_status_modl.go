@@ -1,6 +1,9 @@
 package intasend
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
 // PaymentStatus represents the complete payment status response from IntaSend
 type PaymentStatus struct {
@@ -15,7 +18,7 @@ type Invoice struct {
 	State        string  `json:"state"`         // Payment state (PENDING, COMPLETED, FAILED, etc.)
 	Provider     string  `json:"provider"`      // Payment provider (M-PESA, CARD, etc.)
 	Charges      float64 `json:"charges"`       // Processing charges as number (e.g., 0.00)
-	NetAmount    float64 `json:"net_amount"`    // Net payment amount after charges
+	NetAmount    string  `json:"net_amount"`    // Net payment amount as string (e.g., "2907.54")
 	Currency     string  `json:"currency"`      // Payment currency (KES, USD, etc.)
 	Value        float64 `json:"value"`         // Payment value as number (e.g., 10.36)
 	Account      string  `json:"account"`       // Customer account (email or phone)
@@ -105,8 +108,18 @@ func (ps *PaymentStatus) GetFailureReason() string {
 	return ""
 }
 
-// GetPaymentAmount returns the net payment amount
+// GetPaymentAmount returns the net payment amount as float64
+// Returns 0.0 if the conversion fails
 func (ps *PaymentStatus) GetPaymentAmount() float64 {
+	amount, err := strconv.ParseFloat(ps.Invoice.NetAmount, 64)
+	if err != nil {
+		return 0.0
+	}
+	return amount
+}
+
+// GetNetAmountString returns the net payment amount as string
+func (ps *PaymentStatus) GetNetAmountString() string {
 	return ps.Invoice.NetAmount
 }
 
@@ -228,7 +241,7 @@ func (ps *PaymentStatus) ToMap() map[string]interface{} {
         "state": "PENDING",
         "provider": "M-PESA",
         "charges": 0.00,
-        "net_amount": 10.36,
+        "net_amount": "10.36",
         "currency": "KES",
         "value": 10.36,
         "account": "test@example.com",

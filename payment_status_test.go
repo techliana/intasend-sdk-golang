@@ -15,7 +15,7 @@ func TestPaymentStatusUnmarshal(t *testing.T) {
 			"state": "COMPLETE",
 			"provider": "M-PESA",
 			"charges": 105.46,
-			"net_amount": 2907.54,
+			"net_amount": "2907.54",
 			"currency": "UGX",
 			"value": 3013.0,
 			"account": "256759739706",
@@ -67,8 +67,8 @@ func TestPaymentStatusUnmarshal(t *testing.T) {
 		t.Errorf("Expected Charges to be 105.46, got %.2f", status.Invoice.Charges)
 	}
 
-	if status.Invoice.NetAmount != 2907.54 {
-		t.Errorf("Expected NetAmount to be 2907.54, got %.2f", status.Invoice.NetAmount)
+	if status.Invoice.NetAmount != "2907.54" {
+		t.Errorf("Expected NetAmount to be 2907.54, got %s", status.Invoice.NetAmount)
 	}
 
 	if status.Invoice.Value != 3013.0 {
@@ -128,7 +128,7 @@ func TestPaymentStatusUnmarshal(t *testing.T) {
 		t.Log("Invoice state is COMPLETE (as expected from API)")
 	}
 
-	t.Logf("Successfully unmarshaled payment status: Invoice=%s, Amount=%.2f %s, Charges=%.2f",
+	t.Logf("Successfully unmarshaled payment status: Invoice=%s, Amount=%s %s, Charges=%.2f",
 		status.Invoice.InvoiceID, status.Invoice.NetAmount, status.Invoice.Currency, status.Invoice.Charges)
 }
 
@@ -142,7 +142,7 @@ func TestPaymentStatusWithStringValues(t *testing.T) {
 			"state": "PENDING",
 			"provider": "CARD",
 			"charges": 0.00,
-			"net_amount": 100.00,
+			"net_amount": "100.00",
 			"currency": "KES",
 			"value": 100.00,
 			"account": "test@example.com",
@@ -189,7 +189,6 @@ func TestPaymentStatusWithStringValues(t *testing.T) {
 		t.Errorf("Expected Value to be 100.00, got %.2f", status.Invoice.Value)
 	}
 
-	t.Logf("Successfully handled numeric values: Charges=%.2f, Value=%.2f", 
+	t.Logf("Successfully handled numeric values: Charges=%.2f, Value=%.2f",
 		status.Invoice.Charges, status.Invoice.Value)
 }
-
