@@ -203,6 +203,7 @@ type CollectionCallback struct {
 	Value          string    `json:"value"`
 	Account        string    `json:"account"`
 	APIRef         string    `json:"api_ref"`
+	ProviderRef    *string   `json:"provider_ref"`
 	Host           string    `json:"host"`
 	FailedReason   string    `json:"failed_reason"`
 	FailedCode     string    `json:"failed_code"`
@@ -278,6 +279,7 @@ type InvoiceTx struct {
 	Value          float64     `json:"value"`
 	Account        string      `json:"account"`
 	APIRef         string      `json:"api_ref"`
+	ProviderRef    *string     `json:"provider_ref"`
 	ClearingStatus string      `json:"clearing_status"`
 	MpesaReference interface{} `json:"mpesa_reference"`
 	Host           string      `json:"host"`
