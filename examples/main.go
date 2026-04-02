@@ -57,6 +57,31 @@ func main() {
 	// fmt.Printf("Payment URL: %s\n", response.URL)
 	// fmt.Printf("Payment ID: %s\n", response.ID)
 
+	// Example: IntaSend-XB Uganda - Initiate Send Money
+	sendMoneyResp, err := client.InitiateSendMoney(&intasend.SendMoneyRequest{
+		Currency:         intasend.CurrencyTZS,
+		Provider:         intasend.ProviderIntaSendXB,
+		BatchReference:   "TZ-batch-001",
+		Country:          "TZ",
+		RequiresApproval: intasend.ApprovalNo,
+		Transactions: []intasend.SendMoneyTransaction{
+			{
+				Account:   "XXXXXXX",
+				Amount:    "284855",
+				Narrative: "tz-tx-ref-001",
+			},
+		},
+	})
+	if err != nil {
+		fmt.Printf("Error initiating send-money: %s\n", err)
+	} else {
+		fmt.Printf("Send Money - Tracking ID: %s, Status: %s\n", sendMoneyResp.TrackingID, sendMoneyResp.Status)
+		for _, tx := range sendMoneyResp.Transactions {
+			fmt.Printf("  Tx: %s -> %s, Amount: %v, Status: %s\n", tx.Name, tx.Account, tx.Amount, tx.Status)
+		}
+	}
+	return
+
 	// Example 1: List all invoices
 	invoices, err := client.ListInvoices(nil)
 	if err != nil {
