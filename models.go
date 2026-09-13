@@ -218,6 +218,7 @@ type IntaSendXBPushRequest struct {
 	Amount       string       `json:"amount"`
 	PhoneNumber  string       `json:"phone_number"`
 	Currency     CurrencyType `json:"currency"`
+	Country      string       `json:"country"`
 	APIRef       string       `json:"api_ref,omitempty"`
 	WalletID     string       `json:"wallet_id,omitempty"`
 	MobileTarrif TarriffType  `json:"mobile_tarrif,omitempty"`

@@ -215,6 +215,17 @@ func (c *Client) SendIntaSendXBPush(req *IntaSendXBPushRequest) (*IntaSendXBPush
 	if req.Currency != CurrencyUGX && req.Currency != CurrencyTZS {
 		return nil, fmt.Errorf("currency must be UGX or TZS for IntaSend-XB push")
 	}
+	if req.Country == "" {
+		switch req.Currency {
+		case CurrencyUGX:
+			req.Country = "UG"
+		case CurrencyTZS:
+			req.Country = "TZ"
+		}
+	}
+	if req.Country == "" {
+		return nil, fmt.Errorf("country is required")
+	}
 	if req.MobileTarrif == "" {
 		req.MobileTarrif = CUSTOMER_PAYS
 	}

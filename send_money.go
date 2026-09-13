@@ -107,6 +107,9 @@ func (c *Client) InitiateSendMoney(req *SendMoneyRequest) (*SendMoneyResponse, e
 	if req.Currency == "" {
 		return nil, fmt.Errorf("currency is required")
 	}
+	if req.Country == "" {
+		return nil, fmt.Errorf("country is required")
+	}
 	if len(req.Transactions) == 0 {
 		return nil, fmt.Errorf("at least one transaction is required")
 	}
